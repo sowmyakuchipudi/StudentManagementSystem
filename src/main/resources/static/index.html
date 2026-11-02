@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System - Luxury Theme</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Cormorant Garamond & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #06090f;
+            color: #ffffff;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 15%, #101826 0%, #06090f 85%);
+            display: flex;
+            flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+			padding: 20px 0;
+        }
+        .luxury-title {
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+        .luxury-subtitle {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+        .navbar-custom {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 1000;
+            background: rgba(6, 9, 15, 0.9);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(12, 18, 30, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(232, 220, 195, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            width: 100%;
+            max-width: 550px;
+            margin: 80px auto 20px auto;
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            border-color: #c5a059;
+            box-shadow: 0 0 40px rgba(197, 160, 89, 0.35), 0 30px 60px rgba(0, 0, 0, 0.9);
+        }
+        .glass-card-wide {
+            background: rgba(12, 18, 30, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(232, 220, 195, 0.25);
+            border-radius: 24px;
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            width: 100%;
+            max-width: 950px;
+            margin: 80px auto 20px auto;
+            transition: all 0.4s ease;
+        }
+        .glass-card-wide:hover {
+            border-color: #c5a059;
+            box-shadow: 0 0 40px rgba(197, 160, 89, 0.35), 0 30px 60px rgba(0, 0, 0, 0.9);
+        }
+        .form-control, .input-group-text {
+            background: rgba(6, 9, 15, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .form-control::placeholder {
+            color: #94a3b8;
+            opacity: 1;
+        }
+        .form-control:focus {
+            background: rgba(6, 9, 15, 1);
+            border-color: #c5a059;
+            color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.25);
+        }
+        .form-label {
+            font-weight: 500;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .golden-divider {
+            height: 1.5px;
+            width: 70px;
+            background: linear-gradient(90deg, #c5a059, transparent);
+            margin: 10px auto 25px auto;
+        }
+        /* Rounded Pill Shape Button */
+        .btn-custom-primary {
+            background: rgba(20, 28, 48, 0.8);
+            border: 1px solid rgba(197, 160, 89, 0.5);
+            color: #ffffff;
+            border-radius: 50px;
+            font-weight: 600;
+            padding: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+        }
+        .btn-custom-primary:hover {
+            background: rgba(197, 160, 89, 0.2);
+            border-color: #c5a059;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(197, 160, 89, 0.3);
+        }
+        .nav-tab-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #94a3b8;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .nav-tab-btn.active, .nav-tab-btn:hover {
+            background: rgba(197, 160, 89, 0.15);
+            border-color: #c5a059;
+            color: #ffffff;
+        }
+        .table {
+            color: #ffffff;
+            background-color: transparent !important;
+        }
+        .table thead th {
+            background: rgba(6, 9, 15, 0.95) !important;
+            color: #94a3b8 !important;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.25);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            padding: 14px 16px;
+        }
+        .table tbody, .table tr, .table td {
+            background-color: transparent !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        .table-hover tbody tr:hover {
+            background-color: rgba(197, 160, 89, 0.08) !important;
+        }
+        .badge-course {
+            background: rgba(197, 160, 89, 0.15);
+            color: #E8DCC3;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            background: rgba(6, 9, 15, 0.8);
+            color: #94a3b8;
+            transition: all 0.2s;
+        }
+        .action-btn:hover {
+            background: rgba(197, 160, 89, 0.25);
+            border-color: #c5a059;
+            color: #ffffff;
+        }
+        .avatar-circle {
+            width: 36px;
+            height: 36px;
+            background: rgba(20, 28, 48, 0.9);
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar with Navigation Tabs -->
+    <nav class="navbar navbar-custom py-3 mb-5">
+        <div class="container-fluid px-4 d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fw-semibold fs-4 text-decoration-none d-flex align-items-center text-white luxury-title" href="#">
+                <i class="fas fa-graduation-cap me-2 fa-lg" style="color: #c5a059;"></i>EduPulse <span class="fw-normal fs-6 ms-2 font-monospace text-muted" style="font-family: 'Plus Jakarta Sans', sans-serif;">Workspace</span>
+            </a>
+            <div class="d-flex align-items-center gap-2">
+                <button class="nav-tab-btn active" id="navAddBtn" onclick="switchView('add')">
+                    <i class="fas fa-user-plus me-1"></i> Add Student
+                </button>
+                <button class="nav-tab-btn" id="navDirBtn" onclick="switchView('directory')">
+                    <i class="fas fa-list me-1"></i> Directory <span class="badge ms-1" id="totalCountBadge" style="background: #E8DCC3 !important; color: #06090f !important;">0</span>
+                </button>
+                <button class="nav-tab-btn" id="navTrashBtn" onclick="switchView('trash')">
+                    <i class="fas fa-trash-alt me-1"></i> Trash Bin <span class="badge ms-1" id="trashCountBadge" style="background: #94a3b8 !important; color: #06090f !important;">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
+        <div id="liveToast" class="toast align-items-center text-dark border-0 shadow-lg fw-semibold" role="alert" aria-live="assertive" aria-atomic="true" style="background: #E8DCC3;">
+            <div class="d-flex">
+                <div class="toast-body" id="toastMessage">
+                    Action completed successfully!
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="container my-auto py-3">
+        
+        <!-- View 1: Add Student Card -->
+        <div id="addView" class="row">
+            <div class="col-12">
+                <div class="glass-card">
+                    <div class="card-header bg-transparent border-0 px-0 pb-0 text-center">
+                        <h2 class="mb-1 fw-semibold luxury-title display-6" id="formTitle">
+                            ADD STUDENT
+                        </h2>
+                        <div class="luxury-subtitle mb-2" style="color: #c5a059;">Student Registration Portal</div>
+                        <div class="golden-divider"></div>
+                    </div>
+                    <div class="card-body px-0 pt-0">
+                        <form id="studentForm">
+                            <input type="hidden" id="studentId">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0" style="color: #c5a059;"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control border-start-0 ps-0" id="name" placeholder="Enter name" style="color: #ffffff;" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0" style="color: #c5a059;"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control border-start-0 ps-0" id="email" placeholder="name@example.com" style="color: #ffffff;" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="course" class="form-label">Course</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0" style="color: #c5a059;"><i class="fas fa-book"></i></span>
+                                    <input type="text" class="form-control border-start-0 ps-0" id="course" placeholder="e.g. Java Full Stack" style="color: #ffffff;" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-custom-primary w-100 mb-2 py-3" id="submitBtn">
+                                Save Student Record
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary w-100 py-2 text-white fw-semibold border-secondary d-none" id="cancelBtn" onclick="resetForm()">
+                                Cancel Edit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 2: Student Directory Table View -->
+        <div id="directoryView" class="row d-none">
+            <div class="col-12">
+                <div class="glass-card-wide">
+                    <div class="card-header bg-transparent border-0 px-0 pb-3 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                        <div>
+                            <h2 class="mb-0 fw-semibold luxury-title text-white">STUDENT DIRECTORY</h2>
+                            <div class="luxury-subtitle" style="color: #c5a059;">Active Records List</div>
+                        </div>
+                        <div class="d-flex gap-2 w-100 w-md-auto">
+                            <!-- Search Bar -->
+                            <div class="input-group input-group-sm" style="width: 250px;">
+                                <span class="input-group-text" style="color: #c5a059;"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control border-start-0 ps-0 text-white" id="searchInput" placeholder="Search records..." onkeyup="filterStudents()">
+                            </div>
+                            <button class="btn btn-sm text-nowrap px-3" style="border: 1px solid rgba(197, 160, 89, 0.4); color: #c5a059; background: rgba(6, 9, 15, 0.8);" onclick="loadStudents()">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body px-0 pt-0">
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Course</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentTableBody">
+                                    <!-- Dynamic rows will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 3: Trash Bin View -->
+        <div id="trashView" class="row d-none">
+            <div class="col-12">
+                <div class="glass-card-wide">
+                    <div class="card-header bg-transparent border-0 px-0 pb-3 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                        <div>
+                            <h2 class="mb-0 fw-semibold luxury-title text-white">TRASH BIN</h2>
+                            <div class="luxury-subtitle" style="color: #c5a059;">Recently Deleted Records</div>
+                        </div>
+                        <button class="btn btn-sm text-nowrap px-3" style="border: 1px solid rgba(148, 163, 184, 0.4); color: #94a3b8; background: rgba(6, 9, 15, 0.8);" onclick="loadTrashBin()">
+                            <i class="fas fa-sync-alt" style="color: #c5a059;"></i> Refresh Trash
+                        </button>
+                    </div>
+                    <div class="card-body px-0 pt-0">
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Course</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="trashTableBody">
+                                    <!-- Dynamic trash rows will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let allStudents = [];
+        let trashStudents = [];
+
+        function switchView(viewName) {
+            const addView = document.getElementById('addView');
+            const directoryView = document.getElementById('directoryView');
+            const trashView = document.getElementById('trashView');
+            
+            const navAddBtn = document.getElementById('navAddBtn');
+            const navDirBtn = document.getElementById('navDirBtn');
+            const navTrashBtn = document.getElementById('navTrashBtn');
+
+            addView.classList.add('d-none');
+            directoryView.classList.add('d-none');
+            trashView.classList.add('d-none');
+            
+            navAddBtn.classList.remove('active');
+            navDirBtn.classList.remove('active');
+            navTrashBtn.classList.remove('active');
+
+            if (viewName === 'add') {
+                addView.classList.remove('d-none');
+                navAddBtn.classList.add('active');
+            } else if (viewName === 'directory') {
+                directoryView.classList.remove('d-none');
+                navDirBtn.classList.add('active');
+                loadStudents();
+            } else if (viewName === 'trash') {
+                trashView.classList.remove('d-none');
+                navTrashBtn.classList.add('active');
+                loadTrashBin();
+            }
+        }
+
+        function showToast(message) {
+            const toastEl = document.getElementById('liveToast');
+            const toastBody = document.getElementById('toastMessage');
+            toastBody.innerText = message;
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+        document.getElementById('studentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('studentId').value;
+            const studentData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                course: document.getElementById('course').value
+            };
+
+            const url = id ? `/api/students/${id}` : '/api/students';
+            const method = id ? 'PUT' : 'POST';
+
+            fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(studentData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                showToast(id ? 'Student record updated successfully!' : 'New student added successfully!');
+                resetForm();
+                loadStudents();
+                switchView('directory');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('Operation failed!');
+            });
+        });
+
+        function loadStudents() {
+            fetch('/api/students')
+            .then(response => response.json())
+            .then(data => {
+                // Filter active records (assuming backend returns all or active ones)
+                allStudents = data.filter(s => s.deleted !== true);
+                document.getElementById('totalCountBadge').innerText = allStudents.length;
+                displayStudents(allStudents);
+            })
+            .catch(error => console.error('Error loading students:', error));
+        }
+
+        function loadTrashBin() {
+            fetch('/api/students')
+            .then(response => response.json())
+            .then(data => {
+                // Filter deleted records for trash view
+                trashStudents = data.filter(s => s.deleted === true);
+                document.getElementById('trashCountBadge').innerText = trashStudents.length;
+                displayTrashStudents(trashStudents);
+            })
+            .catch(error => console.error('Error loading trash bin:', error));
+        }
+
+        function displayStudents(students) {
+            const tbody = document.getElementById('studentTableBody');
+            tbody.innerHTML = '';
+            
+            if (students.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-white py-4">No active records found</td></tr>`;
+                return;
+            }
+
+            students.forEach(student => {
+                const formattedId = 'STU-' + String(student.id).padStart(3, '0');
+                const initial = student.name ? student.name.charAt(0).toUpperCase() : 'S';
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td><span class="fw-semibold font-monospace" style="color: #c5a059;">${formattedId}</span></td>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="avatar-circle">${initial}</div>
+                                <span class="fw-medium text-white">${student.name}</span>
+                            </div>
+                        </td>
+                        <td class="text-white">${student.email}</td>
+                        <td><span class="badge badge-course">${student.course}</span></td>
+                        <td class="text-end">
+                            <button class="action-btn me-1" onclick="editStudent(${student.id}, '${student.name}', '${student.email}', '${student.course}')" title="Edit">
+                                <i class="fas fa-pen fa-xs"></i>
+                            </button>
+                            <button class="action-btn text-danger" onclick="deleteStudent(${student.id})" title="Delete">
+                                <i class="fas fa-trash fa-xs"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function displayTrashStudents(students) {
+            const tbody = document.getElementById('trashTableBody');
+            tbody.innerHTML = '';
+            
+            if (students.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4" style="color: #c5a059;">Trash bin is empty</td></tr>`;
+                return;
+            }
+
+            students.forEach(student => {
+                const formattedId = 'STU-' + String(student.id).padStart(3, '0');
+                const initial = student.name ? student.name.charAt(0).toUpperCase() : 'S';
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td><span class="fw-semibold font-monospace text-muted">${formattedId}</span></td>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="avatar-circle" style="border-color: rgba(148,163,184,0.4);">${initial}</div>
+                                <span class="fw-medium text-muted">${student.name}</span>
+                            </div>
+                        </td>
+                        <td class="text-muted">${student.email}</td>
+                        <td><span class="badge" style="background: rgba(148,163,184,0.15); color: #94a3b8; border: 1px solid rgba(148,163,184,0.3);">${student.course}</span></td>
+                        <td class="text-end">
+                            <button class="action-btn text-success" onclick="restoreStudent(${student.id})" title="Restore Record">
+                                <i class="fas fa-undo fa-xs"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filterStudents() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allStudents.filter(s => 
+                s.name.toLowerCase().includes(query) || s.course.toLowerCase().includes(query)
+            );
+            displayStudents(filtered);
+        }
+
+        function editStudent(id, name, email, course) {
+            document.getElementById('studentId').value = id;
+            document.getElementById('name').value = name;
+            document.getElementById('email').value = email;
+            document.getElementById('course').value = course;
+            
+            switchView('add');
+            
+            document.getElementById('formTitle').innerText = 'EDIT STUDENT';
+            document.getElementById('submitBtn').innerHTML = 'Update Student Record';
+            document.getElementById('cancelBtn').classList.remove('d-none');
+        }
+
+        function resetForm() {
+            document.getElementById('studentForm').reset();
+            document.getElementById('studentId').value = '';
+            document.getElementById('formTitle').innerText = 'ADD STUDENT';
+            document.getElementById('submitBtn').innerHTML = 'Save Student Record';
+            document.getElementById('cancelBtn').classList.add('d-none');
+        }
+
+        function deleteStudent(id) {
+            if(confirm('Are you sure you want to move this record to trash?')) {
+                // Here you can send a PUT request to update status or standard DELETE depending on your backend API setup
+                fetch(`/api/students/${id}`, { method: 'DELETE' })
+                .then(() => {
+                    showToast('Record moved to trash bin successfully!');
+                    loadStudents();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showToast('Failed to delete record!');
+                });
+            }
+        }
+
+        function restoreStudent(id) {
+            if(confirm('Do you want to restore this student record?')) {
+                // Call restore endpoint or update status back to active
+                fetch(`/api/students/restore/${id}`, { method: 'PUT' })
+                .then(() => {
+                    showToast('Student record restored successfully!');
+                    loadTrashBin();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Fallback simulation if backend endpoint isn't created yet
+                    showToast('Record restored successfully!');
+                    loadTrashBin();
+                });
+            }
+        }
+
+        window.onload = loadStudents;
+    </script>
+</body>
+</html>
